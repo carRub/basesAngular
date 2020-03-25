@@ -1,0 +1,37 @@
+<input type="text" [(ngModel)]="searchValue" (keydown.enter)="search()">
+<a name="" id="" class="btn btn-primary ml-4" href="#" role="button" (click)="search()">Buscar producto</a>
+<p *ngIf="searchValue.length > 0">Buscando: {{searchValue}}</p>
+<br>
+
+
+<input type="checkbox" id="existing" (change)='onStock($event)'>
+<label class="ml-3" for="existing">Solo en existencia</label><br>
+
+<input type="checkbox" id="sort" (change)='sort($event)'>
+<label class="ml-3" for="sort">Ordenar por precio (menor a mayor)</label><br>
+
+<input type="checkbox" id="highlight" (change)="highlight($event)">
+<label class="ml-3" for="highlight">Resaltar existencia mayor a 3</label>
+
+<div class="alert alert-danger" *ngIf="selectedProducts.length == 0" role="alert">
+    <strong>Ningún producto concuerda con la búsqueda</strong>
+</div>
+
+
+<ul class="list-group justify-content-center">
+    <li *ngFor="let item of selectedProducts" class="list-group-item" [ngClass]="{'bg-success': item.stock > 3 && shouldHighlight }">
+        <div class="card flex-row flex-wrap" [ngClass]="">
+            <div class="card-header border-0">
+                <img src="https://picsum.photos/id/1/100/100" alt="">
+            </div>
+            <div class="card-block px-2">
+                <h4 class="card-title">{{item.name}}</h4>
+                <p class="card-text">Precio (MXN): $ {{item.price}}</p>
+                <p>Marca: {{item.brand}}</p>
+                <p>Descripción: {{item.description}}</p>
+                <p>Existencia: {{item.stock}}</p>
+            </div>
+            <div class="w-100"></div>
+        </div>
+    </li>
+</ul>
